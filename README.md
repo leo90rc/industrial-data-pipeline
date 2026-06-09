@@ -27,10 +27,10 @@ A manufacturing plant continuously collects measurements from industrial equipme
 
 Examples of monitored variables include:
 
-* Temperature
-* Pressure
-* Flow rate
-* Energy consumption
+* Temperature (°C)
+* Pressure (bar)
+* Flow Rate (m³/h)
+* Energy Consumption (kWh)
 * Machine status
 * Product quality indicators
 
