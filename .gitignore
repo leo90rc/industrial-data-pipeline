@@ -1,2 +1,10 @@
 .venv/
+
 pruebas.ipynb
+
+data/raw/*.csv
+data/processed/*.csv
+
+*.db
+__pycache__/
+*.pyc
