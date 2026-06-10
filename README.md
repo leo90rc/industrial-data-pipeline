@@ -40,6 +40,16 @@ The purpose of the pipeline is to transform raw sensor data into reliable datase
 
 ---
 
+## Simulated Process
+
+The simulated process includes two reactors, a steam condenser and a heat exchanger.
+
+Sensors monitor operating conditions such as temperature, pressure, flow rate and energy consumption across different process units.
+
+The generated dataset includes both normal operating conditions and abnormal measurements outside predefined operating limits.
+
+---
+
 ## Dataset Size
 
 The simulated dataset contains:
