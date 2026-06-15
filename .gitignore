@@ -8,3 +8,5 @@ data/processed/*.csv
 *.db
 __pycache__/
 *.pyc
+
+.env
