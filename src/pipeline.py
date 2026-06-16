@@ -2,6 +2,7 @@ from pathlib import Path
 
 from extract import extract_raw_data
 from transform import transform_data
+from load import load_to_postgresql
 
 
 PROCESSED_DATA_PATH = Path("data/processed")
@@ -31,6 +32,12 @@ def run_pipeline() -> None:
     )
 
     save_processed_data(
+        sensors_clean,
+        measurements_clean,
+        alerts,
+    )
+
+    load_to_postgresql(
         sensors_clean,
         measurements_clean,
         alerts,
