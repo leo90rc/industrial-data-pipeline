@@ -1,12 +1,11 @@
 .venv/
 
-pruebas.ipynb
+**pycache**/
+*.pyc
+
+.env
 
 data/raw/*.csv
 data/processed/*.csv
 
 *.db
-__pycache__/
-*.pyc
-
-.env

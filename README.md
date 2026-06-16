@@ -2,7 +2,7 @@
 
 End-to-end Data Engineering project that simulates the ingestion, transformation and storage of industrial sensor data.
 
-The project reproduces a typical manufacturing environment where operational measurements are collected from production equipment and processed into analytical datasets for reporting and monitoring.
+The project reproduces a simplified industrial process where operational measurements are collected from process equipment and transformed into analytical datasets for monitoring, reporting and operational analysis.
 
 ---
 
@@ -16,6 +16,7 @@ The pipeline covers:
 * Data extraction
 * Data validation
 * Data transformation
+* Alert generation
 * Data loading
 * KPI calculation
 
@@ -23,7 +24,7 @@ The pipeline covers:
 
 ## Business Scenario
 
-A manufacturing plant continuously collects measurements from industrial equipment and production lines.
+A manufacturing plant continuously collects measurements from industrial process equipment.
 
 Examples of monitored variables include:
 
@@ -31,10 +32,8 @@ Examples of monitored variables include:
 * Pressure (bar)
 * Flow Rate (m³/h)
 * Energy Consumption (kWh)
-* Machine status
-* Product quality indicators
 
-Raw operational data often contains missing values, duplicated records and measurements outside acceptable operating ranges.
+Raw operational data may contain measurements outside predefined operating limits. These abnormal operating conditions must be detected, classified and stored for further analysis.
 
 The purpose of the pipeline is to transform raw sensor data into reliable datasets that can be used for operational reporting and decision making.
 
@@ -42,7 +41,14 @@ The purpose of the pipeline is to transform raw sensor data into reliable datase
 
 ## Simulated Process
 
-The simulated process includes two reactors, a steam condenser and a heat exchanger.
+The simulated process includes:
+
+* Reactor A
+* Reactor B
+* Steam inlet to condenser
+* Condensate outlet from condenser
+* Heat exchanger inlet
+* Heat exchanger outlet
 
 Sensors monitor operating conditions such as temperature, pressure, flow rate and energy consumption across different process units.
 
@@ -54,9 +60,10 @@ The generated dataset includes both normal operating conditions and abnormal mea
 
 The simulated dataset contains:
 
-- 20 industrial sensors
-- 1 year of hourly measurements
-- 175,200 measurement records
+* 20 industrial sensors
+* 1 year of hourly measurements
+* 175,200 measurement records
+* Automatically generated operational alerts
 
 ---
 
@@ -66,16 +73,19 @@ The simulated dataset contains:
 Raw Sensor Data
         │
         ▼
-Data Extraction
+Extract
         │
         ▼
-Data Validation
+Transform
+        │
+        ├── Column Validation
+        ├── Type Validation
+        ├── Duplicate Removal
+        ├── Range Validation
+        └── Alert Generation
         │
         ▼
-Data Transformation
-        │
-        ▼
-PostgreSQL Database
+PostgreSQL
         │
         ▼
 SQL KPIs & Analytics
@@ -131,19 +141,25 @@ industrial-data-pipeline/
 
 ## Data Model
 
-The project uses a PostgreSQL database containing:
+The PostgreSQL database contains three core entities:
 
 ### Sensors
 
-Information about industrial sensors.
+Stores sensor metadata and operating limits.
 
 ### Measurements
 
-Time-series operational measurements collected from sensors.
+Stores time-series measurements collected from industrial sensors.
 
 ### Alerts
 
-Operational alerts generated when measurements exceed predefined limits.
+Stores operational alerts generated when measurements exceed configured operating limits.
+
+Additional details are available in:
+
+```text
+docs/data_model.md
+```
 
 ---
 
@@ -159,16 +175,20 @@ Raw CSV files are loaded into the pipeline.
 
 ### 3. Transform
 
-Data quality checks are applied:
+Data quality checks and transformations are applied:
 
-* Missing value handling
+* Column validation
+* Data type validation
 * Duplicate removal
-* Type validation
 * Range validation
+* Operating limit validation
+* Alert generation
 
 ### 4. Load
 
-Validated data is loaded into PostgreSQL tables.
+Processed datasets are loaded into PostgreSQL.
+
+The loading process is idempotent and can be executed multiple times without creating duplicate records.
 
 ### 5. Analyze
 
@@ -178,12 +198,14 @@ SQL queries generate operational KPIs and performance indicators.
 
 ## Example KPIs
 
+The project includes SQL queries for:
+
+* Sensors with the highest number of alerts
+* Alerts by production unit
 * Average temperature by production unit
-* Average pressure by production unit
-* Total energy consumption
-* Alert count by severity
+* Alert severity distribution
+* Daily alert trends
 * Percentage of measurements outside operating limits
-* Sensor availability rate
 
 ---
 
@@ -200,4 +222,6 @@ SQL queries generate operational KPIs and performance indicators.
 
 ## Status
 
-Work in progress.
+Completed MVP.
+
+The project implements a functional end-to-end ETL pipeline with PostgreSQL integration, range validation, operational alert generation and SQL-based KPI analysis.
